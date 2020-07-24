@@ -10,4 +10,9 @@ class FlutterNativeSharedPreferences {
     final String version = await _channel.invokeMethod('getPlatformVersion');
     return version;
   }
+
+  static Future<Map<String, dynamic>> get portfolioName async {
+    final Map<String, dynamic> response = await _channel.invokeMethod('getPortfolioName');
+    return response;
+  }
 }
