@@ -19,6 +19,7 @@ const val STATUS = "status"
 const val DATA = "data"
 const val SETTING_PREFERENCES = "setting"
 const val SHARED_PREFERENCE_DEFAULT_PORTFOLIONAME = "PortfolioName"
+const val SHARED_PREFERENCE_PORTFOLIO_ALLOCATION = "portfolio"
 
 /** FlutterNativeSharedPreferencesPlugin */
 public class FlutterNativeSharedPreferencesPlugin : FlutterPlugin, MethodCallHandler, ActivityAware {
@@ -64,6 +65,14 @@ public class FlutterNativeSharedPreferencesPlugin : FlutterPlugin, MethodCallHan
                     }
                     val sharedPref = activity?.getSharedPreferences(SETTING_PREFERENCES, Context.MODE_PRIVATE)
                     result.success(mapOf(STATUS to SUCCESS, DATA to sharedPref?.getString(SHARED_PREFERENCE_DEFAULT_PORTFOLIONAME, "")))
+                }
+                "getPortfolioAllocationList" -> {
+                    if (activity == null) {
+                        result.success(mapOf(STATUS to FAILED))
+                        return
+                    }
+                    val sharedPref = activity?.getSharedPreferences(SHARED_PREFERENCE_PORTFOLIO_ALLOCATION, Context.MODE_PRIVATE)
+                    result.success(mapOf(STATUS to SUCCESS, DATA to sharedPref?.getString(SHARED_PREFERENCE_PORTFOLIO_ALLOCATION, "[]")))
                 }
                 else -> {
                     result.notImplemented()
