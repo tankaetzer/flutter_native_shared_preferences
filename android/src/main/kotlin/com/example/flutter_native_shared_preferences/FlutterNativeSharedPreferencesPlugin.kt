@@ -58,6 +58,19 @@ public class FlutterNativeSharedPreferencesPlugin : FlutterPlugin, MethodCallHan
                 "getPlatformVersion" -> {
                     result.success("Android ${android.os.Build.VERSION.RELEASE}")
                 }
+                "setPortfolioName" -> {
+                    if (activity == null) {
+                        result.success(mapOf(STATUS to FAILED))
+                        return
+                    }
+                    val sharedPref = activity?.getSharedPreferences(SETTING_PREFERENCES, Context.MODE_PRIVATE) ?: return
+                    with (sharedPref.edit()) {
+                        val portfolioName: String = call.argument("portfolioName") ?: ""
+                        putString(SHARED_PREFERENCE_DEFAULT_PORTFOLIONAME, portfolioName)
+                        apply()
+                    }
+                    result.success(mapOf(STATUS to SUCCESS))
+                }
                 "getPortfolioName" -> {
                     if (activity == null) {
                         result.success(mapOf(STATUS to FAILED))

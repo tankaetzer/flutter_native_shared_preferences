@@ -16,8 +16,10 @@ class FlutterNativeSharedPreferences {
     return response;
   }
 
-  static Future<Map> get portfolioAllocationList async {
-    final Map response = await _channel.invokeMethod('getPortfolioAllocationList');
+  static Future<Map> setPortfolioName(String portfolioName) async {
+    final Map response = await _channel.invokeMethod('setPortfolioName', {
+      'portfolioName': portfolioName,
+    });
     return response;
   }
 }
